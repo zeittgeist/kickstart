@@ -6,17 +6,24 @@ import (
 	"strconv"
 )
 
-type TestCaseFunction func(s *bufio.Scanner) func(tc int)
+type TestCaseFunction func(tc int)
 
-func ReadTestCases(inputFile string, tcf TestCaseFunction) {
+var s *bufio.Scanner
+
+func ReadTestCases(inputFile string, fn TestCaseFunction) {
 	f, _ := os.Open(inputFile)
-	s := bufio.NewScanner(f)
+
+	s = bufio.NewScanner(f)
 	s.Scan()
 	tc, _ := strconv.Atoi(s.Text())
 
-	fn := tcf(s)
-
 	for i := 0; i < tc; i++ {
-		fn(i)
+		fn(i + 1)
 	}
+	defer f.Close()
+}
+
+func ScanFromBuffio() string {
+	s.Scan()
+	return s.Text()
 }

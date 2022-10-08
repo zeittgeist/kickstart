@@ -25,31 +25,26 @@ func main() {
 		")\n",
 		"\n",
 		"func main() {\n",
-		"  fns := func(s *bufio.Scanner) func(tc int) {\n",
-		"    return func(tc int) {\n",
+		"  fns := func(tc int) {\n",
 		"      // your code goes here\n",
-		"    }\n",
 		"  }\n",
 		"\n",
 		"  reusable.ReadTestCases(\"yourtestfile.txt\", fns)\n",
 		"  // readStd(fns)\n",
 		"}\n",
 		"\n",
-		"func readStd(fns func(s *bufio.Scanner) func(tc int)) {\n",
-		"  s := bufio.NewScanner(os.Stdin)\n",
+		"func readStd(fn func(tc int)) {\n",
 		"  var tc int\n",
 		"  fmt.Scanf(\"%d\", &tc)\n",
 		"\n",
-		"  fn := fns(s)\n",
-		"\n",
 		"  for i := 0; i < tc; i++ {\n",
-		"          fn(i)\n",
+		"          fn(i + 1)\n",
 		"  }\n",
 		"}\n",
 	)
 
-	fp := fmt.Sprintf("%v.go", filename)
+	fp := fmt.Sprintf("%s.go", filename)
 
 	ioutil.WriteFile(fp, []byte(t), 0776)
-	fmt.Printf("Wrote file %v.go\n", filename)
+	fmt.Printf("Wrote file %s.go\n", filename)
 }
